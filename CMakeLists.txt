@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.19)
 
+# CMake 4.0+ rejects subprojects that still declare cmake_minimum_required(VERSION 3.0)
+# (e.g. FetchContent glucose). Raise the policy floor so dependency trees configure.
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "4.0")
+    set(CMAKE_POLICY_VERSION_MINIMUM "3.5" CACHE STRING "" FORCE)
+endif()
+
 # * Macro to exclude the directory from source
 function(EXCLUDE_FROM_LIST REMOVE_LIST TARGET_LIST)
     message(STATUS "Exclude the directory - ${${REMOVE_LIST}}")
