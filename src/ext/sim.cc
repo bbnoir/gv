@@ -142,8 +142,9 @@ struct randomSim : public Pass {
                 strcmp(wire->name.c_str(), ("\\" + clk_name).c_str()))  // check the wire is not rst or clk
                 ++num_inputs;
         }
-        std::string command =
-            "yosys -qp \"read_verilog " + verilog_file_name + "; hierarchy -top " + top_module_name + "; write_cxxrtl .sim.cpp;\"";
+        std::string command = std::string(GV_YOSYS_BIN_PATH) +
+                              " -qp \"read_verilog " + verilog_file_name + "; hierarchy -top " + top_module_name +
+                              "; write_cxxrtl .sim.cpp;\"";
         run_command(command);
         std::string wire_name;
         std::string module_name;
@@ -458,6 +459,9 @@ struct randomSim : public Pass {
 #ifdef __APPLE__
         compileCmd += "-stdlib=libc++ ";
 #endif
+        // Bundled yosys-config --datdir often points at a prefix (e.g. /usr/local/share/yosys)
+        // that does not exist on dev machines; cxxrtl headers live in the Yosys source tree.
+        compileCmd += "-I\"" + std::string(GV_YOSYS_SOURCE_DIR) + "\" ";
         compileCmd += "-I `" + yosysConfig + " --datdir`/include "
                       "-w "
                       ".sim_main.cpp -o .tb ";
