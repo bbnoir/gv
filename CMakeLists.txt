@@ -181,11 +181,15 @@ add_library(libvcd-parser STATIC IMPORTED)
 set_target_properties(libvcd-parser PROPERTIES IMPORTED_LOCATION ${LIB_VCD_PARSER_PATH})
 
 # * FMT Library
-FetchContent_Declare(
-    fmt
-    GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-    GIT_TAG 10.2.1)
-FetchContent_MakeAvailable(fmt)
+find_package(fmt CONFIG QUIET)
+if(NOT fmt_FOUND)
+    FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+        GIT_TAG 10.2.1
+    )
+    FetchContent_MakeAvailable(fmt)
+endif()
 
 # * Glucose
 FetchContent_Declare(
@@ -197,7 +201,13 @@ FetchContent_MakeAvailable(glucose)
 # Link the library installed by brew
 if(APPLE)
     link_directories(/opt/homebrew/lib)
-    link_directories(/usr/local/opt/gmp/lib)
+    if(EXISTS /opt/homebrew/opt/gmp/lib)
+        link_directories(/opt/homebrew/opt/gmp/lib)
+    endif()
+
+    if(EXISTS /usr/local/opt/gmp/lib)
+        link_directories(/usr/local/opt/gmp/lib)
+    endif()
 endif()
 # Link the Yosys shared libray path
 link_directories(${YOSYS_DIR})
