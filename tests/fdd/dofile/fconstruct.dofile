@@ -1,0 +1,7 @@
+cirread -v socv/bdd_lab/rtl/adder_2.v
+fsetorder -file
+fcons -all
+frep 15
+frep 16
+frep 17
+q -f

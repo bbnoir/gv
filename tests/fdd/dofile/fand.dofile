@@ -1,0 +1,19 @@
+fsetvar 1 a
+fsetvar 2 b
+fsetvar 3 c
+fsetvar 4 d
+fand o1 a b
+fand o2 c d
+fand o3 o1 o2
+frep o1
+frep o2
+frep o3
+fsim o1 00
+fsim o1 01
+fsim o1 10
+fsim o1 11
+fsim o3 0000
+fsim o3 1100
+fsim o3 1010
+fsim o3 1111
+q -f

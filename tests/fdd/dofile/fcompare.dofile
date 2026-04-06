@@ -1,0 +1,39 @@
+fsetvar 1 a
+fsetvar 2 b
+fsetvar 3 c
+fand ab a b
+fand ba b a
+fcomp ab ba
+for oab a b
+for oba b a
+fcomp oab oba
+finv nota a
+fcomp a nota
+fnand nab a b
+fsim nab 00
+fsim nab 01
+fsim nab 10
+fsim nab 11
+fnor nob a b
+fsim nob 00
+fsim nob 01
+fsim nob 10
+fsim nob 11
+fxnor xn a b
+fsim xn 00
+fsim xn 01
+fsim xn 10
+fsim xn 11
+fxor x1 a b
+fxor x2 a c
+fand a1 x1 x2
+frep a1
+fsim a1 000
+fsim a1 001
+fsim a1 010
+fsim a1 011
+fsim a1 100
+fsim a1 101
+fsim a1 110
+fsim a1 111
+q -f
